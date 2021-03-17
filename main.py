@@ -31,7 +31,7 @@ async def on_ready():
 async def on_message(message):
   if message.author == client.user:
     return
-
+  
   if message.content.startswith('!dub'):
     """
       How to use: !dub
@@ -45,8 +45,26 @@ async def on_message(message):
       How to use: !tmu
       What it does: Sends a hype message. #TMU
     """
-    await message.channel.send('TURN ME UPPPPPPPPPPPP')
+    await message.channel.send('TURN ME UPPPPPPPPPPPP YABNIL LATHIIIIIIINNAAAAAAAAAAAAA')
   
+  elif message.content.startswith('!grau'):
+    await message.channel.send('mono suppressor\nTempus 26.4 Arch\nTac Laser\nCommando Foregrip\n50 Round Mag')  
+  
+  elif message.content.startswith('!who likes to push'):
+    await message.channel.send('Abdul, of course')
+  
+  elif message.content.startswith("!who is youssef"):
+    await message.channel.send("your wife beater friend, of course")
+
+  elif message.content.startswith("!huy"):
+    await message.channel.send('Repeat after me: "Ashhadu An Laa"')
+
+  elif message.content.startswith('!riddle me this'):
+    await message.channel.send("What does Alex say when he gets downed on a dumb push\n\nOMG WALLAH HE'S 1 SHOT")
+
+  elif message.content.startswith('!wael'):
+    await message.channel.send("Game: ENEMY LANDING IN THE A/O\nWael: down")
+
   elif message.content.startswith('!reset'):
     """
       How to use: !reset
