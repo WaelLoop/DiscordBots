@@ -64,6 +64,15 @@ async def on_message(message):
     """
     dub.increment_dub()
     await message.channel.send(f'Dub counter: {dub.counter}')
+  elif message.content.startswith("!getdub "):
+    try:
+        # Split the string and get the date
+        date = message.split(" ")
+        dubs = dub.get_dubs(date)
+        await message.channel.send(f'The numbers of dubs the squad got on {date}: {dubs}')
+    except:
+        await message.channel.send(f'Invalid date!')
+
 
   elif message.content.startswith('!reset'):
     """
@@ -83,7 +92,7 @@ async def on_message(message):
       How to use: !help
       What it does: prints the list of valid commands
     """
-    otherCommands = ["!dub", "!reset", "!GetDub <DD/MM/YY>", "!help"]  # The ones that requires access to the hashmap
+    otherCommands = ["!dub", "!reset", "!getdub <DD/MM/YY>", "!help"]  # The ones that requires access to the hashmap
     validCommands = list(listOfCommands.keys())
     validCommands.append(otherCommands)
     response = "Here is the list of valid commands:\n\t" + "\n\t".join(validCommands)
