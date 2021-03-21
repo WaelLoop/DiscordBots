@@ -60,7 +60,7 @@ listOfCommands = {
     "!tmu": 'TURN ME THE FUCK UPPPPPPPPPPPP YABNIL LATHIIIIIIINNAAAAAAAAAAAAA',
     "!alex": "What does Alex say when he gets downed on a dumb push...\n\nOMG WALLAH HE'S 1 SHOT",
     "!talal": "YEL3AN OM EL KHARA",
-    "!loadout:" : "type !loadout:<insert gun name> to the best warzone attachments for that gun",
+    "!loadout:<insert gun name>" : "type !loadout:<insert gun name> to the best warzone attachments for that gun",
 }
 
 
@@ -122,8 +122,22 @@ async def on_message(message):
       How to use: !loadout:<insert gun name>
       What it does: returns an optimal warzone loadout
       """
-      gun  = message.content.replace('!loadout:', '')
-      return gun
+      
+      gun = message.content.replace('!loadout:', '').lower().replace(' ','').replace('-','')
+      indices = []
+
+      for i in range(len(guns)):
+          if gun in guns[i].lower().replace(" ", "").replace("-", ""):
+              indices.append(i)
+      response = ""
+      for i in indices:
+          response += '\nModern Warfare:' if i < cold_war_start_index else '\nCold War:'
+          response += '\n'
+          gun_row = sheet.row_values(i + 1)
+          for attachment in gun_row[1:-1]:
+              response += attachment + '\n'
+
+      await message.channel.send(response)
 
     elif message.content.startswith("!"):
         try:
