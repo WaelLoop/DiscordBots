@@ -1,6 +1,21 @@
 import discord
 import os
 from datetime import datetime
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com",
+]
+
+creds = ServiceAccountCredentials.from_json_keyfile_name("./google_sheets_creds.json")
+client = gspread.authorize(creds)
+sheet = client.open("warzone_loadouts").sheet1
+guns = sheet.col_values(2)
+cold_war_start_index = guns.index("") + 1
 
 
 # Dub instance
@@ -43,9 +58,9 @@ listOfCommands = {
     "!huy": 'Repeat after me: "Ashhadu An Laa"',
     "!abdul": "ABDUL THE PUSHER! A.K.A. 14 Kills Coach Abdul",
     "!tmu": 'TURN ME THE FUCK UPPPPPPPPPPPP YABNIL LATHIIIIIIINNAAAAAAAAAAAAA',
-    "!grau": 'Mono suppressor\nTempus 26.4 Arch\nTac Laser\nCommando Foregrip\n50 Round Mag',
     "!alex": "What does Alex say when he gets downed on a dumb push...\n\nOMG WALLAH HE'S 1 SHOT",
-    "!talal": "YEL3AN OM EL KHARA"
+    "!talal": "YEL3AN OM EL KHARA",
+    "!loadout:" : "type !loadout:<insert gun name> to the best warzone attachments for that gun",
 }
 
 
@@ -101,6 +116,14 @@ async def on_message(message):
         validCommands += otherCommands
         response = "Here is the list of valid commands:\n" + "\n".join(str(command) for command in validCommands)
         await message.channel.send(response)
+    
+    elif message.content.startswith("!loadout:"):
+      """
+      How to use: !loadout:<insert gun name>
+      What it does: returns an optimal warzone loadout
+      """
+      gun  = message.content.replace('!loadout:', '')
+      return gun
 
     elif message.content.startswith("!"):
         try:
